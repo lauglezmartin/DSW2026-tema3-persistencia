@@ -8,7 +8,7 @@ services:
     
     # Mapeo de puertos (Host:Contenedor)
     ports:
-      - "5000:5000"
+      - "5005:5005"
       
     # Mapeo de volúmenes para el hot-reload (Host:Contenedor)
     volumes:
