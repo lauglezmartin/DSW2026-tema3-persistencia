@@ -63,6 +63,7 @@ def mostrar_catalogo():
 @app.route("/producto/nuevo", methods=["GET", "POST"])
 def crear_producto():
     form = ProductoForm()
+    # Llega con POST
     if form.validate_on_submit():
         nuevo_prod = Producto(
             nombre=form.nombre.data,
@@ -73,7 +74,7 @@ def crear_producto():
         db.session.commit()
         # Patrón PRG: Redirigimos tras procesar el POST con éxito
         return redirect(url_for("mostrar_catalogo"))
-
+    #Llega con GET
     return render_template("producto_form.html", form=form, titulo="Nuevo Producto")
 
 
@@ -101,6 +102,8 @@ def editar_producto(prod_id):
 
 # 4. DELETE: Eliminar un producto de la BD (exclusivamente por POST)
 @app.route("/producto/<int:prod_id>/eliminar", methods=["POST"])
+# No usamos GET para eliminar, por seguridad y buenas prácticas, ya que si lo usaramos, 
+# un simple enlace podría eliminar un producto sin confirmación.
 def eliminar_producto(prod_id):
     producto = db.get_or_404(Producto, prod_id)
     db.session.delete(producto)
